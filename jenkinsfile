@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+    stages {
+        stage('Pull Docker Images') {
+            steps {
+                script {
+                    echo 'Pulling Docker Images...'
+                    sh 'docker pull node:14.1'
+                    sh 'docker pull maven:3.8.4'
+                }
+            }
+        }
+        stage('Run Node.js Container') {
+            steps {
+                script {
+                    echo 'Running Node.js Container...'
+                    sh '''
+                        docker run --rm node:14.1 node -v > node_version.txt
+                        echo "Node $(cat node_version.txt) Suleman"
+                    '''
+                }
+            }
+        }
+        stage('Run Maven Container') {
+            steps {
+                script {
+                    echo 'Running Maven Container...'
+                    sh '''
+                        docker run --rm maven:3.8.4 mvn -version > maven_version.txt
+                        echo "Maven $(head -n 1 maven_version.txt) Suleman"
+                    '''
+                }
+            }
+        }
+    }
+}

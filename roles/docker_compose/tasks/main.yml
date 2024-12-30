@@ -1,0 +1,8 @@
+---
+- name: Install Docker Compose using Homebrew
+  homebrew:
+    name: docker-compose
+    state: present
+
+- name: Verify Docker Compose installation
+  command: docker-compose --version

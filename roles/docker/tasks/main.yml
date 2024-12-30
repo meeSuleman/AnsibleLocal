@@ -1,0 +1,10 @@
+- name: Install Docker using Homebrew
+  homebrew:
+    name: docker
+    state: present
+
+- name: Install Docker services
+  become: yes
+  shell: |
+    brew install --cask docker
+    brew services start docker
